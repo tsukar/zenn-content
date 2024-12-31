@@ -26,7 +26,7 @@ published: false
 
 https://map.taiwan-mazesoba.com/
 
-<!-- TODO: ここに画像を貼る -->
+![](/images/overview-taimaze-map.png)
 
 もともと私が「マツコの知らない世界」に出演した際に、番組内でマツコ・デラックスさんに都内の台湾まぜそば事情をプレゼンするために開発したマップアプリ（以下、旧アプリ）があり、放送後もしばらくは公開を続けていました。しかし、旧アプリは後述する事情のため実際の運用が極めて難しい状態になっていました。今回、技術スタックを一から見直して再構築を行い、今後も続けていけそうなめどが立ちました。その過程で得た知見を記事にまとめます。
 
@@ -38,11 +38,13 @@ https://map.taiwan-mazesoba.com/
 
 microCMS はヘッドレスCMSを提供するサービスです。今回は店舗一覧APIを作成し、そこに各店舗のレビューを登録していきました。
 
-<!-- TODO: ここに画像を貼る -->
+![](/images/example-taimaze-admin.png)
+*（新アプリ）microCMS で作った店舗レビューの管理画面*
 
 旧アプリでは Google スプレッドシートに店舗情報を一行ずつ手打ちで入力し、そのシートをデータベースに見立てて Google Apps Script (GAS) によって JSON で配信する API を作って利用していました。
 
-<!-- TODO: ここに画像を貼る -->
+![](/images/old-taimaze-admin.png)
+*（旧アプリ）Google スプレッドシートで管理していた店舗一覧*
 
 この方式はすぐ使える API を用意する分には良かったのですが、以下の点が運用上のネックでした：
 
@@ -67,6 +69,9 @@ https://github.com/visgl/react-map-gl
 アプリは Cloudflare Pages でホストしています。
 
 [Preview deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/) の機能を使って開発中のブランチの挙動を見ながら、メインブランチにマージする流れで開発を進めました。
+
+![](/images/preview-url.png)
+*PRを作るとプレビュー環境の URL がコメントで展開される様子*
 
 フロントエンド側は microCMS のコンテンツを参照しかしない作りにしたことで、この Preview deployments 機能との相性が良かった（開発中のコードの不具合がコンテンツの整合性を破壊する心配が一切なかった）と感じています。
 
