@@ -38,6 +38,14 @@ https://map.taiwan-mazesoba.com/
 
 ## Hono
 
+yusukebe さんの記事を参考に、雑に React の SPA を作るために使いました。
+
+https://zenn.dev/yusukebe/articles/06d9cc1714bfb7
+
+マップ部分は react-map-gl を使っています。
+
+https://github.com/visgl/react-map-gl
+
 ## Cloudflare Pages
 
 # 感想
