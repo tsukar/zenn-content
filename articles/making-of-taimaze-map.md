@@ -48,4 +48,10 @@ https://github.com/visgl/react-map-gl
 
 ## Cloudflare Pages
 
+アプリは Cloudflare Pages でホストしています。
+
+[Preview deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/) の機能を使って開発中のブランチの挙動を見ながら、メインブランチにマージする流れで開発を進めました。
+
+フロントエンド側は microCMS のコンテンツを参照しかしない作りにしたことで、この Preview deployments 機能との相性が良かった（開発中のコードの不具合がコンテンツの整合性を破壊する心配が一切なかった）と感じています。
+
 # 感想
