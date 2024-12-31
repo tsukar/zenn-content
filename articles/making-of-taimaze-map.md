@@ -32,6 +32,8 @@ https://map.taiwan-mazesoba.com/
 
 # 技術スタック
 
+バックエンド側のAPI・管理画面に microCMS を使い、フロントエンド側を Hono で React の SPA 構成にしたものを Cloudflare Pages で配信しています。
+
 ## microCMS
 
 ## Hono
