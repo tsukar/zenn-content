@@ -46,6 +46,62 @@ published: false
 
 ## 「まぜる」動きの実現（CSS アニメーション）
 
+箸を単にグルグル回す（ `rotate` ）だけだと、「まぜている」感じが出ません。また、単純な円運動だと機械的な印象になってしまいます。
+
+そこで、X軸とY軸のアニメーションを分離して合成することで、滑らかな楕円運動（＝丼の中でかきまぜる動き）を表現しました。
+
+## ステップ1: X軸とY軸のキーフレームを別々に定義
+
+X軸方向（左右）とY軸方向（上下）の動きをそれぞれ `keyframes` で定義します。
+
+```tsx
+// X軸の動き（左右に大きく振れる）
+const moveX = keyframes`
+  0% { transform: translateX(-30px); }
+  100% { transform: translateX(30px); }
+`;
+
+// Y軸の動き（上下の振れ幅は小さめにする）
+const moveY = keyframes`
+  0% { transform: translateY(-9px); }
+  100% { transform: translateY(9px); }
+`;
+```
+
+## ステップ2: 2つの箱でアニメーションを合成
+
+React コンポーネント側で、これらのアニメーションを組み合わせて適用します。 
+
+```tsx
+export const ChopsticksSpinner = memo(function ChopsticksSpinner() {
+  const duration = "0.6s"; // 半周にかかる時間
+
+  return (
+    <Box>
+      {/* X軸方向の動きを担当する箱 */}
+      <Box
+        animation={`${moveX} ${duration} ease-in-out infinite alternate`}
+        ...
+      >
+        {/* Y軸方向の動きを担当する箱 */}
+        <Box
+          animation={`${moveY} ${duration} ease-in-out infinite alternate`}
+          // ★重要: 位相を90度（周期の半分）ずらすことで楕円運動になる
+          style={{ animationDelay: `calc(-${duration} / 2)` }}
+        >
+          {/* 描画本体（箸） */}
+          <svg ... style={{ transform: "rotate(45deg)" }}>
+            {/* ... */}
+          </svg>
+        </Box>
+      </Box>
+    </Box>
+  );
+});
+```
+
+ポイントは `animationDelay` で指定している位相のズレです。X軸とY軸の動きが完全に同期していると、物体は斜めに直線移動するだけです。ここでY軸のアニメーションを `duration / 2` だけずらす（＝サインとコサインの関係にする）ことで、動きが合成されて滑らかな楕円軌道になります。
+
 # まとめ
 
 * SVG `<path>` を使うことで、単純な線ではなく箸らしい形状を簡単に描画できた。
